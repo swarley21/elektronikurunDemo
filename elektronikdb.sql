@@ -21,6 +21,42 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: File; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."File" (
+    file_id integer NOT NULL
+);
+
+
+ALTER TABLE public."File" OWNER TO postgres;
+
+--
+-- Name: User; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."User" (
+    user_id integer NOT NULL,
+    "userEmail" character varying(25) NOT NULL,
+    "userPassword" integer NOT NULL,
+    "userName" character varying(15) NOT NULL
+);
+
+
+ALTER TABLE public."User" OWNER TO postgres;
+
+--
+-- Name: Yetki; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Yetki" (
+    yetki_id integer NOT NULL
+);
+
+
+ALTER TABLE public."Yetki" OWNER TO postgres;
+
+--
 -- Name: kargo; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -73,8 +109,7 @@ ALTER SEQUENCE public.kategori_kategori_id_seq OWNED BY public.kategori.kategori
 
 CREATE TABLE public.marka (
     marka_id integer NOT NULL,
-    marka_adi character varying(15) NOT NULL,
-    "markaAciklamasi" character varying(30)
+    marka_adi character varying(15) NOT NULL
 );
 
 
@@ -131,11 +166,39 @@ ALTER TABLE ONLY public.kategori ALTER COLUMN kategori_id SET DEFAULT nextval('p
 
 
 --
+-- Data for Name: File; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."File" (file_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."User" (user_id, "userEmail", "userPassword", "userName") FROM stdin;
+1	caner.167879@gmail.com	651	canerarik
+2	sevval@gmail.com	1202	sevval1
+3	ozge@gmail.com	1205	ozge5
+\.
+
+
+--
+-- Data for Name: Yetki; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Yetki" (yetki_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: kargo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.kargo (kargo_id, teslimat_tarihi, kargo_takip_no) FROM stdin;
 1	2022-03-20 00:00:00+03	46545
+2	2022-03-24 00:00:00+03	45611
 \.
 
 
@@ -149,6 +212,7 @@ COPY public.kategori (kategori_id, kategori_adi) FROM stdin;
 3	televizyon
 4	beyaz esya
 5	ev aletleri
+6	aksesuar
 \.
 
 
@@ -156,12 +220,14 @@ COPY public.kategori (kategori_id, kategori_adi) FROM stdin;
 -- Data for Name: marka; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.marka (marka_id, marka_adi, "markaAciklamasi") FROM stdin;
-1	asus	\N
-2	sony	\N
-3	apple	\N
-4	xiaomi	\N
-5	huawei	\N
+COPY public.marka (marka_id, marka_adi) FROM stdin;
+1	asus
+2	sony
+3	apple
+4	xiaomi
+5	huawei
+6	arcelik
+7	logitech
 \.
 
 
@@ -171,6 +237,7 @@ COPY public.marka (marka_id, marka_adi, "markaAciklamasi") FROM stdin;
 
 COPY public.sepet (sepet_id, urun_id, rezervasyon_tarihi) FROM stdin;
 1	2	2022-03-09 00:00:00+03
+2	1	2022-03-24 00:00:00+03
 \.
 
 
@@ -180,6 +247,7 @@ COPY public.sepet (sepet_id, urun_id, rezervasyon_tarihi) FROM stdin;
 
 COPY public.siparis (siparis_id, urun_id, siparis_tarihi, kargo_id) FROM stdin;
 1	2	2022-03-10 00:00:00+03	1
+2	1	2022-03-25 00:00:00+03	2
 \.
 
 
@@ -199,6 +267,14 @@ COPY public.urun (urun_id, marka_id, stok, "urunFiyat", "urunResim", kategori_id
 --
 
 SELECT pg_catalog.setval('public.kategori_kategori_id_seq', 15, true);
+
+
+--
+-- Name: File File_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."File"
+    ADD CONSTRAINT "File_pkey" PRIMARY KEY (file_id);
 
 
 --
@@ -223,6 +299,22 @@ ALTER TABLE ONLY public.sepet
 
 ALTER TABLE ONLY public.siparis
     ADD CONSTRAINT "Siparis_pkey" PRIMARY KEY (siparis_id);
+
+
+--
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_pkey" PRIMARY KEY (user_id);
+
+
+--
+-- Name: Yetki Yetki_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Yetki"
+    ADD CONSTRAINT "Yetki_pkey" PRIMARY KEY (yetki_id);
 
 
 --
